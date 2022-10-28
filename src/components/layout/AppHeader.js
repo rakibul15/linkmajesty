@@ -1,6 +1,6 @@
 import React from "react";
-import {DownOutlined, MenuFoldOutlined, MenuUnfoldOutlined} from "@ant-design/icons";
-import {Button, Dropdown, Layout, Menu, Space} from "antd";
+import {BellFilled, MenuOutlined, UserOutlined} from "@ant-design/icons";
+import {Avatar, Badge, Button, Dropdown, Layout, Menu, Space} from "antd";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 
@@ -46,12 +46,12 @@ export default function AppHeader({collapsed, setCollapsed}) {
           label: 'Profile',
           key: PROFILE
         },
-        // {
-        //   label: <ARMButton size="small" type="primary" danger>
-        //     Log Out
-        //   </ARMButton>,
-        //   key: LOGOUT
-        // }
+        {
+          label: <Button size="small" type="primary" danger>
+            Log Out
+          </Button>,
+          key: LOGOUT
+        }
       ]}
     />
   );
@@ -60,30 +60,42 @@ export default function AppHeader({collapsed, setCollapsed}) {
     <Layout.Header
       className="site-layout-background"
       style={{
-        color: "#ffffff",
-        backgroundColor: "#391B52",
+        color: "black",
+        backgroundColor: "#ffffff",
         fontSize: "20px",
         position: "sticky",
         top: 0,
-        zIndex: 9999999,
+        zIndex: 999,
         display: "flex",
         justifyContent: "space-between",
-        alignItems: "center",
+        alignItems: 'center'
       }}
     >
-      {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+      {React.createElement(collapsed ? MenuOutlined : MenuOutlined, {
         className: "trigger",
         onClick: () => setCollapsed(!collapsed),
       })}
 
-      <Dropdown overlay={menu}>
-        <Button>
+      <div style={{display: "flex", gap: '10px', alignItems: 'center'}}>
+        <div style={{marginRight: '10px'}}>
+          <Badge dot>
+            {/*<BellTwoTone style={{fontSize: '22px', color: 'black'}} theme="outlined"/>*/}
+            <BellFilled style={{fontSize: '18px', color: 'black'}}/>
+          </Badge>
+        </div>
+        <Button style={{color: 'skyblue', border: '2px solid skyblue'}}><i className="fas fa-dollar-sign"/> <span
+          style={{marginLeft: '3px'}}>500</span></Button>
+        <Dropdown overlay={menu}>
           <Space>
-            <small>"userName"</small>
-            <DownOutlined/>
+            <div style={{display: 'block'}}>
+              <p style={{fontSize: "14px"}}>Rakibul Hasan</p>
+            </div>
+            <Avatar size={"large"} icon={<UserOutlined/>}/>
           </Space>
-        </Button>
-      </Dropdown>
+
+        </Dropdown>
+      </div>
+
     </Layout.Header>
   );
 }

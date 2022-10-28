@@ -19,7 +19,7 @@ export default function CommonLayout({children}) {
         <AppHeader collapsed={collapsed} setCollapsed={setCollapsed}/>
         <Content
           style={{
-            margin: "1em",
+            margin: "3em",
           }}
         >
           {children}

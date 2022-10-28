@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+import logo from './logo.png';
 import './App.css';
 import React, {useState} from "react";
 import {AppProvider} from './contex/app'
