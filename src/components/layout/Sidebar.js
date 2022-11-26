@@ -37,7 +37,7 @@ export default function Sidebar({collapsed, logo}) {
       </div>
 
       <Menu
-        style={{marginTop: '40px'}}
+        style={{marginTop: '58px'}}
         onClick={(value) => {
           const {key} = value;
           // dispatch(setMenu({key}));
@@ -53,7 +53,7 @@ export default function Sidebar({collapsed, logo}) {
             label: 'Home',
           },
           {
-            key: 'Earnings',
+            key: 'earnings',
             icon: <i className="fas fa-dollar-sign"/>,
             label: 'Earnings',
           }

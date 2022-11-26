@@ -14,6 +14,7 @@ export default function CommonLayout({children}) {
       <Sidebar
         collapsed={collapsed}
         logo={logo}
+        setCollapsed={setCollapsed}
       />
       <Layout className="site-layout">
         <AppHeader collapsed={collapsed} setCollapsed={setCollapsed}/>

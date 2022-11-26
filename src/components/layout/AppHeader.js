@@ -44,7 +44,8 @@ export default function AppHeader({collapsed, setCollapsed}) {
       items={[
         {
           label: 'Profile',
-          key: PROFILE
+          key: PROFILE,
+          icon: ""
         },
         {
           label: <Button size="small" type="primary" danger>
