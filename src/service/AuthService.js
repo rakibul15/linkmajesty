@@ -5,6 +5,10 @@ class AuthService {
     return axiosInstance.post('/register', value);
   }
 
+  login(value) {
+    return axiosInstance.post('/login', value);
+  }
+
   getAllRack(isActive) {
     return axiosInstance.get(`/store-management/racks/?active=${isActive}`);
   }

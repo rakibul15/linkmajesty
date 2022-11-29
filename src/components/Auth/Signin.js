@@ -1,12 +1,53 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import './Authentication.css';
-import {Col, Form, Input, Row} from "antd";
+import {Col, Form, Input, notification, Row} from "antd";
 import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons";
 import RMButton from "../common/button/RMButton";
 import logo from "../../logo.png";
+import authService from "../../service/AuthService";
+import {notifyError, notifySuccess} from "../common/notifications";
+import RMForm from "../common/RMForm";
+import {useDispatch} from "react-redux";
+import {setUser} from "../../reducers/user.reducer";
 
 const Signin = () => {
+  let navigate = useNavigate();
+  let dispatch = useDispatch();
+  const [form] = Form.useForm();
+  const handleLogin = async (values) => {
+    authService.login(values)
+      .then((response) => {
+        localStorage.setItem("userId", `${response.data.id}`);
+        localStorage.setItem("token", `${response.data.token}`);
+        localStorage.setItem("refreshToken", `${response.data.refreshToken}`);
+      if(response.data.status===false){
+        notification["error"]({
+          message: response.data.message,
+        });
+        return
+      }
+
+        dispatch(setUser(response.data));
+        // dispatch(setMenu({ key: '' }));
+        notifySuccess("Successfully login")
+        navigate("/");
+
+
+      })
+      .catch((error) => {
+        notification["error"]({
+          message: "Username or password invalid",
+        });
+        console.log("something went wrong", error);
+      });
+
+
+  };
+
+  const onFinish = (values) => {
+    handleLogin(values)
+  }
 
   return (
     <>
@@ -34,7 +75,15 @@ const Signin = () => {
 
                 </h4>
               </div>
-
+              <RMForm
+                form={form}
+                name="store"
+                autoComplete="off"
+                style={{
+                  backgroundColor: "#ffffff",
+                }}
+                onFinish={onFinish}
+              >
 
               <Form.Item
                 name="Email"
@@ -79,6 +128,7 @@ const Signin = () => {
               <Form.Item style={{marginTop: '35px'}}>
                 <h4>Don't have an account? <Link to={"/signup"}>Sign Up</Link></h4>
               </Form.Item>
+              </RMForm>
             </div>
           </Col>
         </Row>
