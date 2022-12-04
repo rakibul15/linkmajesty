@@ -14,13 +14,12 @@ const Signup = () => {
   const onChange = (e) => {
     setCheck(e.target.checked)
   };
-  const handleCountrySubmit = async (updateValues) => {
+  const handleSubmit = async (updateValues) => {
     try {
       const {data} = await authService.register(updateValues);
-      notifySuccess("Store successfully created")
+      notifySuccess("An Email sent to your mail")
 
     } catch (error) {
-      // notifyResponseError(error)
       console.log("error", error)
     }
   };
@@ -30,7 +29,7 @@ const Signup = () => {
       check,
       ...values
     }
-    handleCountrySubmit(updateValues)
+    handleSubmit(updateValues)
   }
   return (
     <div style={{backgroundColor: '#FAFBFE'}}>

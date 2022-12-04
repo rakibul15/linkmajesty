@@ -6,7 +6,7 @@ import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons";
 import RMButton from "../common/button/RMButton";
 import logo from "../../logo.png";
 import authService from "../../service/AuthService";
-import {notifyError, notifySuccess} from "../common/notifications";
+import {notifySuccess} from "../common/notifications";
 import RMForm from "../common/RMForm";
 import {useDispatch} from "react-redux";
 import {setUser} from "../../reducers/user.reducer";
@@ -18,17 +18,19 @@ const Signin = () => {
   const handleLogin = async (values) => {
     authService.login(values)
       .then((response) => {
+        console.log({response})
         localStorage.setItem("userId", `${response.data.id}`);
         localStorage.setItem("token", `${response.data.token}`);
         localStorage.setItem("refreshToken", `${response.data.refreshToken}`);
-      if(response.data.status===false){
-        notification["error"]({
-          message: response.data.message,
-        });
-        return
-      }
+        if (response.data.status === false) {
+          notification["error"]({
+            message: response.data.message,
+          });
+          return
+        }
 
-        dispatch(setUser(response.data));
+        dispatch(setUser(response.data.account));
+        console.log("///", response.data.account)
         // dispatch(setMenu({ key: '' }));
         notifySuccess("Successfully login")
         navigate("/");
@@ -85,49 +87,49 @@ const Signin = () => {
                 onFinish={onFinish}
               >
 
-              <Form.Item
-                name="Email"
-                rules={[{
-                  required: false, message: "",
-                }, {
-                  whitespace: true,
-                  message: "Only space is not allowed",
-                },]}
-                style={{marginTop: '15px'}}
-              >
-                <Input size={"large"} type={'email'} placeholder={'Email'}/>
-              </Form.Item>
+                <Form.Item
+                  name="Email"
+                  rules={[{
+                    required: false, message: "",
+                  }, {
+                    whitespace: true,
+                    message: "Only space is not allowed",
+                  },]}
+                  style={{marginTop: '15px'}}
+                >
+                  <Input size={"large"} type={'email'} placeholder={'Email'}/>
+                </Form.Item>
 
-              <Form.Item
-                name="Password"
-                rules={[{
-                  required: false, message: "",
-                }, {
-                  whitespace: true,
-                  message: "Only space is not allowed",
-                },]}
-                style={{marginTop: '15px', marginBottom: '0px'}}
-              >
-                <Input.Password
-                  size={"large"}
-                  placeholder="Password"
-                  iconRender={(visible) => (visible ? <EyeTwoTone/> : <EyeInvisibleOutlined/>)}
-                />
-              </Form.Item>
-              <p style={{padding: '0px', margin: '0px', textAlign: 'right'}}><Link to={"/reset-password"}
-                                                                                   style={{
-                                                                                     padding: '0px',
-                                                                                     margin: '0px'
-                                                                                   }}>Forget Password!</Link></p>
+                <Form.Item
+                  name="Password"
+                  rules={[{
+                    required: false, message: "",
+                  }, {
+                    whitespace: true,
+                    message: "Only space is not allowed",
+                  },]}
+                  style={{marginTop: '15px', marginBottom: '0px'}}
+                >
+                  <Input.Password
+                    size={"large"}
+                    placeholder="Password"
+                    iconRender={(visible) => (visible ? <EyeTwoTone/> : <EyeInvisibleOutlined/>)}
+                  />
+                </Form.Item>
+                <p style={{padding: '0px', margin: '0px', textAlign: 'right'}}><Link to={"/reset-password"}
+                                                                                     style={{
+                                                                                       padding: '0px',
+                                                                                       margin: '0px'
+                                                                                     }}>Forget Password!</Link></p>
 
-              <RMButton size={'large'} style={{width: '100%', fontSize: '19px', padding: '0px', marginTop: '15px'}}
-                        type="primary"
-                        htmlType="submit">
-                Sign Up
-              </RMButton>
-              <Form.Item style={{marginTop: '35px'}}>
-                <h4>Don't have an account? <Link to={"/signup"}>Sign Up</Link></h4>
-              </Form.Item>
+                <RMButton size={'large'} style={{width: '100%', fontSize: '19px', padding: '0px', marginTop: '15px'}}
+                          type="primary"
+                          htmlType="submit">
+                  Sign Up
+                </RMButton>
+                <Form.Item style={{marginTop: '35px'}}>
+                  <h4>Don't have an account? <Link to={"/signup"}>Sign Up</Link></h4>
+                </Form.Item>
               </RMForm>
             </div>
           </Col>

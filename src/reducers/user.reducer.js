@@ -1,9 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
   username: '',
   isLoggedIn: false,
   token: '',
+  name: '',
+  email: '',
+  status: '',
+  country: '',
+  source: '',
+  affiliate_url: '',
+  comission_rate: 0,
+  balance: null,
+  paypal_email: '',
+  user_image: ''
+
 }
 
 export const userSlice = createSlice({
@@ -11,13 +22,34 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      const { token, username } = action.payload;
+      const {
+        token, username, name,
+        email,
+        status,
+        country,
+        source,
+        affiliate_url,
+        comission_rate,
+        balance,
+        paypal_email,
+        user_image
+      } = action.payload;
 
       return {
         ...state,
         isLoggedIn: true,
         token,
         username,
+        name,
+        email,
+        status,
+        country,
+        source,
+        affiliate_url,
+        comission_rate,
+        balance,
+        paypal_email,
+        user_image
       }
     },
 
@@ -27,14 +59,12 @@ export const userSlice = createSlice({
         username: '',
         isLoggedIn: false,
         token: '',
-        defaultAccessRight: [],
-        userAccessPermissions: {}
       }
     }
   }
 })
 
-export const { setUser, removeUser } = userSlice.actions;
+export const {setUser, removeUser} = userSlice.actions;
 
 const userReducer = userSlice.reducer;
 

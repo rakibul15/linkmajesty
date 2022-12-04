@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import CommonLayout from "../layout/CommonLayout";
 import {Avatar, Col, Form, Image, Input, Row, Space} from "antd";
 import RMForm from "../common/RMForm";
 import RmCard from "../common/RMCard";
 import RMButton from "../common/button/RMButton";
 import {useParams} from "react-router-dom";
+import {useSelector} from "react-redux";
+import ChangePassword from "./ChangePassword";
 
 const Profile = () => {
   const [form] = Form.useForm();
@@ -17,6 +19,21 @@ const Profile = () => {
       span: 24,
     },
   };
+
+  const user = useSelector((state) => state.user);
+  console.log({user})
+  console.log("name", user.name)
+
+  useEffect(() => {
+    form.setFieldsValue({
+      ...user
+    })
+  }, []);
+  const onFinish = (values) => {
+    console.log({values})
+  }
+
+
   return (
     <CommonLayout>
       <h1 style={{fontWeight: '600', fontSize: '20px', marginLeft: '20px', marginBottom: '30px'}}>Profile</h1>
@@ -45,25 +62,23 @@ const Profile = () => {
                     }
             />
             <div>
-              <p style={{marginBottom: '0px'}}>SHhfdgd</p>
+              <p style={{marginBottom: '0px'}}>{user.name}</p>
               <small>frghftg</small>
             </div>
           </Space>
           {/* -----------Basic Details---------*/}
           <h1 style={{marginTop: '30px'}}>Basic Details</h1>
           <RMForm form={form}
-                  name="store"
-                  initialValues={{}}
                   autoComplete="off"
                   style={{
                     backgroundColor: "#ffffff",
                   }}
-                  onFinish={""}
+                  onFinish={onFinish}
 
           >
             <Form.Item {...layout}
                        label="Full Name"
-                       name="fullName"
+                       name="name"
                        rules={[{
                          required: false, message: "",
                        }, {
@@ -194,58 +209,7 @@ const Profile = () => {
 
           </Row>
           {/*------------Password Section------------*/}
-          <div style={{
-            paddingLeft: "40px",
-            paddingRight: '80px',
-            paddingTop: '30px',
-            paddingBottom: '40px',
-            backgroundColor: "#ffffff",
-            marginTop: "27px"
-          }}>
-            <h1 style={{marginBottom: '20px'}}>Change Password</h1>
-            <Form.Item {...layout}
-                       name="oldPassword"
-                       rules={[{
-                         required: false, message: "",
-                       }, {
-                         whitespace: true,
-                         message: "Only space is not allowed",
-                       },]}
-                       style={{marginTop: '15px'}}
-            >
-              <Input placeholder={'Old Password'}/>
-            </Form.Item>
-
-            <Form.Item {...layout}
-                       name="newPassword"
-                       rules={[{
-                         required: false, message: "",
-                       }, {
-                         whitespace: true,
-                         message: "Only space is not allowed",
-                       },]}
-                       style={{marginTop: '15px'}}
-            >
-              <Input placeholder={'New Password'}/>
-            </Form.Item>
-
-            <Form.Item {...layout}
-                       name="confirmPassword"
-                       rules={[{
-                         required: false, message: "",
-                       }, {
-                         whitespace: true,
-                         message: "Only space is not allowed",
-                       },]}
-                       style={{marginTop: '15px'}}
-            >
-              <Input placeholder={'Confirm Password'}/>
-            </Form.Item>
-
-            <RMButton type="primary" htmlType="submit">
-              {id ? "Update" : "Change Password"}
-            </RMButton>
-          </div>
+          <ChangePassword></ChangePassword>
 
         </Col>
       </Row>

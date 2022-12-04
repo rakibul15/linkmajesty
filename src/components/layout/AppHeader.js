@@ -1,7 +1,7 @@
 import React from "react";
 import {BellFilled, MenuOutlined, UserOutlined} from "@ant-design/icons";
 import {Avatar, Badge, Button, Dropdown, Layout, Menu, Space} from "antd";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 
 const LOGOUT = "logout";
@@ -10,32 +10,25 @@ const PROFILE = "profile";
 export default function AppHeader({collapsed, setCollapsed}) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  // const handleLogOut = async () => {
-  //   try {
-  //     await UsersService.logOut();
-  //   } catch (e) {
-  //     console.log(e);
-  //   } finally {
-  //     localStorage.clear();
-  //     dispatch(setUser(""));
-  //     navigate("/login");
-  //   }
-  // };
-
+  const handleLogOut = () => {
+    localStorage.clear();
+    // dispatch(setUser(""));
+    navigate("/signin");
+  };
+  const user = useSelector((state) => state.user);
 
   // const userName = useSelector(state => state.user.username)
 
-  const handleMenuClick = async (selected) => {
+  const handleMenuClick = (selected) => {
     const {key} = selected;
+    if (key === LOGOUT) {
+      handleLogOut();
+    }
 
-    // if (key === LOGOUT) {
-    //   await handleLogOut();
-    // }
-
-    // if (key === PROFILE) {
-    //   const userId = localStorage.getItem("userId")
-    //   // navigate(`/configurations/profile/${userId}`)
-    // }
+    if (key === PROFILE) {
+      const userId = localStorage.getItem("userId")
+      navigate('/Profile')
+    }
   }
 
   const menu = (
@@ -85,11 +78,11 @@ export default function AppHeader({collapsed, setCollapsed}) {
           </Badge>
         </div>
         <Button style={{color: 'skyblue', border: '2px solid skyblue'}}><i className="fas fa-dollar-sign"/> <span
-          style={{marginLeft: '3px'}}>500</span></Button>
+          style={{marginLeft: '3px'}}>{user.balance}</span></Button>
         <Dropdown overlay={menu}>
           <Space>
             <div style={{display: 'block'}}>
-              <p style={{fontSize: "14px"}}>Rakibul Hasan</p>
+              <p style={{fontSize: "14px"}}>{user.name}</p>
             </div>
             <Avatar size={"large"} icon={<UserOutlined/>}/>
           </Space>
