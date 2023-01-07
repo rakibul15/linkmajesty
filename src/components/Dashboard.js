@@ -1,16 +1,53 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import CommonLayout from "./layout/CommonLayout";
-import {Button, Col, Input, Row, Select, Tooltip} from "antd";
+import {Button, Col, Input, Row, Tooltip} from "antd";
 import {notifySuccess} from "./common/notifications";
-import {Option} from "antd/es/mentions";
 import RmCard from "./common/RMCard";
 import {Column} from "@ant-design/charts";
+import {useSelector} from "react-redux";
+import EarningService from "../service/EarningService";
 
 const Dashboard = () => {
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
-  const text = "git@github.com:ant-design/ant-design.git"
+
+  const user = useSelector((state) => state.user);
+  console.log({user})
+  const text = user.affiliate_url;
+  const [count, setCount] = useState()
+  const [signup, setSignup] = useState()
+
+  const numberOfClick = async (values) => {
+    try {
+      const {data} = await EarningService.numberOfClicks();
+      console.log({data})
+      setCount(data.count)
+    } catch (error) {
+      console.log("Something went wrong")
+    }
+  };
+
+  const numberOfSignup = async (values) => {
+    try {
+      const {data} = await EarningService.numberOfSignup();
+      console.log({data})
+      setSignup(data.count)
+    } catch (error) {
+      console.log("Something went wrong")
+    }
+  };
+
+  const clicksAndSignUpTable = async (values) => {
+    try {
+      const {data} = await EarningService.numberOfSignupData();
+      console.log({data})
+      // setSignup(data.count)
+    } catch (error) {
+      console.log("Something went wrong")
+    }
+  };
+
 
   const data = [
     {
@@ -77,6 +114,14 @@ const Dashboard = () => {
   };
 
 
+  useEffect(() => {
+    numberOfClick()
+    numberOfSignup()
+    clicksAndSignUpTable()
+
+  }, []);
+
+
   return (
     <CommonLayout>
       <h1 style={{fontWeight: '600', fontSize: '20px'}}>Dashboard</h1>
@@ -89,7 +134,7 @@ const Dashboard = () => {
                    backgroundColor: '#ffffff',
                    color: 'black'
                  }}
-                 defaultValue={text}
+                 defaultValue={user.affiliate_url}
           />
           <Tooltip title="copy the url">
             <Button style={{padding: '0px 35px'}} type={"primary"} onClick={() => {
@@ -100,32 +145,21 @@ const Dashboard = () => {
         </Input.Group>
       </div>
 
-      {/*-------------Select Box------------------*/}
-      <Select
-        defaultValue="thisMonth"
-        size={"large"}
-        style={{
-          width: 200,
-          marginTop: '35px'
-        }}
-        onChange={handleChange}
-      >
-        <Option value="thisMonth">This Month</Option>
-        <Option value="thisWeek">This Week</Option>
-        <Option value="thisYear">This Year</Option>
-      </Select>
-
 
       {/*-----------------Cards Row------------------*/}
       <Row style={{marginTop: '30px'}} gutter={16}>
         <Col md={6}>
-          <RmCard title='Clicks' count={500} icon={<i className="fa fa-paper-plane"></i>}></RmCard>
+          <RmCard title='Clicks' count={count} icon={<i className="fa fa-paper-plane"></i>}></RmCard>
         </Col>
         <Col md={6}>
           <RmCard title='Sign up' count={160} icon={<i className="fa fa-user-plus"></i>}></RmCard>
         </Col>
         <Col md={6}>
-          <RmCard title='Earnings' sign={<i className="fa fa-dollar-sign"></i>} count={500}
+          <RmCard title='Earnings' sign={<i className="fa fa-dollar-sign"></i>} count={signup}
+                  icon={<i className="fa fa-dollar-sign"></i>}></RmCard>
+        </Col>
+        <Col md={6}>
+          <RmCard title='Balance' sign={<i className="fa fa-dollar-sign"></i>} count={user.balance}
                   icon={<i className="fa fa-dollar-sign"></i>}></RmCard>
         </Col>
       </Row>

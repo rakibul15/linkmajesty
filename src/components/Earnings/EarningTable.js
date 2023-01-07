@@ -69,7 +69,7 @@ const EarningTable = () => {
 
   return (
     <div style={{backgroundColor: 'white', padding: '20px 30px'}}>
-      <p style={{color: 'skyblue'}}>Payment History</p>
+      <p style={{color: 'skyblue'}}>Earning History</p>
       <Table
         columns={columns}
         dataSource={data}
