@@ -1,20 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import CommonLayout from "./layout/CommonLayout";
-import {Button, Col, Input, Row, Tooltip} from "antd";
-import {notifySuccess} from "./common/notifications";
+import {Col, Row} from "antd";
 import RmCard from "./common/RMCard";
 import {Column} from "@ant-design/charts";
 import {useSelector} from "react-redux";
 import EarningService from "../service/EarningService";
+import {notifySuccess} from "./common/notifications";
+import {Form} from "react-bootstrap";
 
 const Dashboard = () => {
+
+  // const [data, setData] = useState({})
+
+
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
 
   const user = useSelector((state) => state.user);
   console.log({user})
-  const text = user.affiliate_url;
+  const text = "https://linkmajesty.com/" + user.affiliate_url;
   const [count, setCount] = useState()
   const [signup, setSignup] = useState()
 
@@ -31,7 +36,6 @@ const Dashboard = () => {
   const numberOfSignup = async (values) => {
     try {
       const {data} = await EarningService.numberOfSignup();
-      console.log({data})
       setSignup(data.count)
     } catch (error) {
       console.log("Something went wrong")
@@ -41,7 +45,7 @@ const Dashboard = () => {
   const clicksAndSignUpTable = async (values) => {
     try {
       const {data} = await EarningService.numberOfSignupData();
-      console.log({data})
+      // console.log("============>", data)
       // setSignup(data.count)
     } catch (error) {
       console.log("Something went wrong")
@@ -113,12 +117,13 @@ const Dashboard = () => {
     },
   };
 
-
+  //API CALL
   useEffect(() => {
-    numberOfClick()
-    numberOfSignup()
-    clicksAndSignUpTable()
-
+    (async () => {
+      await numberOfClick()
+      await numberOfSignup()
+      await clicksAndSignUpTable()
+    })();
   }, []);
 
 
@@ -126,23 +131,24 @@ const Dashboard = () => {
     <CommonLayout>
       <h1 style={{fontWeight: '600', fontSize: '20px'}}>Dashboard</h1>
       <div style={{backgroundColor: '#ffffff', padding: '17px', borderRadius: '2px'}}>
-        <h4 style={{marginTop: '5px', color: '#4385F4'}}>Share & Earn Commission</h4>
-        <Input.Group compact>
-          <Input disabled
-                 style={{
-                   width: 'calc(100% - 120px)',
-                   backgroundColor: '#ffffff',
-                   color: 'black'
-                 }}
-                 defaultValue={user.affiliate_url}
-          />
-          <Tooltip title="copy the url">
-            <Button style={{padding: '0px 35px'}} type={"primary"} onClick={() => {
-              navigator.clipboard.writeText(text);
-              notifySuccess("copied successfully")
-            }}>Copy</Button>
-          </Tooltip>
-        </Input.Group>
+        <h6 style={{color: '#4385F4', fontSize: '17px', marginBottom: '10px'}}>Share & Earn
+          Commission</h6>
+        <div className="row earning-link m-1 justify-content-between d-flex align-items-center">
+          <div className="col-sm-11">
+            <div className="affiliate-url">
+              <p>{"https://linkmajesty.com/" + user.affiliate_url}</p>
+            </div>
+          </div>
+          <div className="col-sm-1 affiliate-url text-right" onClick={() => {
+            navigator.clipboard.writeText(text);
+            notifySuccess("copied successfully")
+          }
+
+          }
+          >
+            <button className="btn btn-copy">Copy</button>
+          </div>
+        </div>
       </div>
 
 
@@ -173,7 +179,12 @@ const Dashboard = () => {
       }}>
         <Row style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
           <Col><a href>Clicks & Signup</a></Col>
-          <Col><Button>Last 30 Days</Button></Col>
+          <Col> <Form.Select aria-label="Default select example">
+            {/*<option></option>*/}
+            <option value="1">Last 30 Days</option>
+            <option value="2">Last 6 Months</option>
+            <option value="3">All Time</option>
+          </Form.Select></Col>
         </Row>
         <Row style={{justifyContent: 'center'}}>
           <Col md={12}>

@@ -14,6 +14,7 @@ import PasswordReset from "./components/Auth/PasswordReset";
 import API from "./service/Api";
 import {setUser} from "./reducers/user.reducer";
 import ProtectRoute from "./components/Auth/protectedRoute/ProtectedRoute";
+import './css/style.css'
 
 const {Header, Content} = Layout;
 

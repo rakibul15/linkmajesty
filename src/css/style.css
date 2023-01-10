@@ -1,0 +1,28 @@
+.earning-link {
+    /*border: 1px solid gray;*/
+    border-radius: 10px;
+    padding: 6px 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+}
+
+.affiliate-url p {
+    margin: 0px;
+    padding: 0px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.btn-copy {
+    padding: 6px 20px;
+    background-color: #6099F6;
+    color: #ffffff !important;
+    font-weight: 600;
+    font-size: 15px;
+    margin: 0px !important;
+}
+
+h4 {
+    color: #4385F4;
+    font-size: 17px;
+    margin-bottom: 10px;
+}

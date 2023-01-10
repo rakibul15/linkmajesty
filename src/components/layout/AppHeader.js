@@ -1,8 +1,9 @@
 import React from "react";
-import {BellFilled, MenuOutlined, UserOutlined} from "@ant-design/icons";
-import {Avatar, Badge, Button, Dropdown, Layout, Menu, Space} from "antd";
+import {BellFilled, MenuOutlined} from "@ant-design/icons";
+import {Badge, Button, Dropdown, Layout, Menu, Space} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import profile from "../../logo.png"
 
 const LOGOUT = "logout";
 const PROFILE = "profile";
@@ -41,9 +42,9 @@ export default function AppHeader({collapsed, setCollapsed}) {
           icon: ""
         },
         {
-          label: <Button size="small" type="primary" danger>
+          label: <div>
             Log Out
-          </Button>,
+          </div>,
           key: LOGOUT
         }
       ]}
@@ -77,14 +78,25 @@ export default function AppHeader({collapsed, setCollapsed}) {
             <BellFilled style={{fontSize: '18px', color: 'black'}}/>
           </Badge>
         </div>
-        <Button style={{color: 'skyblue', border: '2px solid skyblue'}}><i className="fas fa-dollar-sign"/> <span
+        <Button style={{color: 'skyblue', border: '2px solid skyblue', padding: '0px 26px', borderRadius: '6px'}}><i
+          className="fas fa-dollar-sign"/> <span
           style={{marginLeft: '3px'}}>{user.balance}</span></Button>
         <Dropdown overlay={menu}>
           <Space>
             <div style={{display: 'block'}}>
               <p style={{fontSize: "14px"}}>{user.name}</p>
             </div>
-            <Avatar size={"large"} icon={<UserOutlined/>}/>
+            {/*<Avatar size={"large"} icon={<UserOutlined/>}/>*/}
+            <img
+              style={{
+                height: '50px',
+                width: '50px',
+                borderRadius: '50%',
+                objectFit: 'contain',
+                border: '1px solid gray'
+              }}
+              src={profile}
+              alt=""/>
           </Space>
 
         </Dropdown>
