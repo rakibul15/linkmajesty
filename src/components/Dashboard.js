@@ -7,18 +7,13 @@ import {useSelector} from "react-redux";
 import EarningService from "../service/EarningService";
 import {notifySuccess} from "./common/notifications";
 import {Form} from "react-bootstrap";
+import ChartView from "./chart/ChartView";
 
 const Dashboard = () => {
-
-  // const [data, setData] = useState({})
-
-
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
-
   const user = useSelector((state) => state.user);
-  console.log({user})
   const text = "https://linkmajesty.com/" + user.affiliate_url;
   const [count, setCount] = useState()
   const [signup, setSignup] = useState()
@@ -45,77 +40,12 @@ const Dashboard = () => {
   const clicksAndSignUpTable = async (values) => {
     try {
       const {data} = await EarningService.numberOfSignupData();
-      // console.log("============>", data)
       // setSignup(data.count)
     } catch (error) {
       console.log("Something went wrong")
     }
   };
 
-
-  const data = [
-    {
-      type: 'January',
-      sales: 38,
-    },
-    {
-      type: 'February',
-      sales: 52,
-    },
-    {
-      type: 'March',
-      sales: 61,
-    },
-    {
-      type: 'April',
-      sales: 90,
-    },
-    {
-      type: 'May',
-      sales: 48,
-    },
-    {
-      type: 'June',
-      sales: 38,
-    },
-    {
-      type: 'July',
-      sales: 38,
-    },
-    {
-      type: 'August',
-      sales: 38,
-    },
-  ];
-  const config = {
-    data,
-    xField: 'type',
-    yField: 'sales',
-    label: {
-      // 可手动配置 label 数据标签位置
-      position: 'middle',
-      // 'top', 'bottom', 'middle',
-      // 配置样式
-      style: {
-        fill: '#FFFFFF',
-        opacity: 0.6,
-      },
-    },
-    xAxis: {
-      label: {
-        autoHide: true,
-        autoRotate: false,
-      },
-    },
-    meta: {
-      type: {
-        alias: 'Month',
-      },
-      sales: {
-        alias: 'Clicks',
-      },
-    },
-  };
 
   //API CALL
   useEffect(() => {
@@ -158,10 +88,10 @@ const Dashboard = () => {
           <RmCard title='Clicks' count={count} icon={<i className="fa fa-paper-plane"></i>}></RmCard>
         </Col>
         <Col md={6}>
-          <RmCard title='Sign up' count={160} icon={<i className="fa fa-user-plus"></i>}></RmCard>
+          <RmCard title='Sign up' count={signup} icon={<i className="fa fa-user-plus"></i>}></RmCard>
         </Col>
         <Col md={6}>
-          <RmCard title='Earnings' sign={<i className="fa fa-dollar-sign"></i>} count={signup}
+          <RmCard title='Earnings' sign={<i className="fa fa-dollar-sign"></i>} count={"123"}
                   icon={<i className="fa fa-dollar-sign"></i>}></RmCard>
         </Col>
         <Col md={6}>
@@ -188,7 +118,7 @@ const Dashboard = () => {
         </Row>
         <Row style={{justifyContent: 'center'}}>
           <Col md={12}>
-            <Column  {...config} />;
+            <ChartView/>
           </Col>
         </Row>
       </div>

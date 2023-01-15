@@ -56,6 +56,11 @@ export default function Sidebar({collapsed, logo}) {
             key: 'earnings',
             icon: <i className="fas fa-dollar-sign"/>,
             label: 'Earnings',
+          },
+          {
+            key: 'payment',
+            icon: <i className="fas fa-credit-card"/>,
+            label: 'Payment',
           }
         ]}
       />

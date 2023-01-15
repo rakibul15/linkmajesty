@@ -23,10 +23,6 @@ const Earnings = () => {
           <RmCard title='Total Earning' sign={<i className="fa fa-dollar-sign"></i>} count={1600}
                   icon={<i className="fa fa-dollar-sign"></i>}></RmCard>
         </Col>
-
-        {/*<Col md={6}>*/}
-        {/*  <FormCard></FormCard>*/}
-        {/*</Col>*/}
       </Row>
       <div style={{marginTop: '30px'}}>
         <EarningTable></EarningTable>

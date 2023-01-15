@@ -15,6 +15,7 @@ import API from "./service/Api";
 import {setUser} from "./reducers/user.reducer";
 import ProtectRoute from "./components/Auth/protectedRoute/ProtectedRoute";
 import './css/style.css'
+import Payment from "./components/payment/Payment";
 
 const {Header, Content} = Layout;
 
@@ -59,6 +60,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ProtectRoute> <Dashboard/></ProtectRoute>} exact/>
         <Route path="/earnings" element={<ProtectRoute> <Earnings/></ProtectRoute>} exact/>
+        <Route path="/payment" element={<ProtectRoute> <Payment/></ProtectRoute>} exact/>
         <Route path="/profile" element={<ProtectRoute> <Profile/></ProtectRoute>} exact/>
         <Route path="/signup" element={<Signup/>} exact/>
         <Route path="/signin" element={<Signin/>} exact/>
