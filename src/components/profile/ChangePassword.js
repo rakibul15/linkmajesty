@@ -4,6 +4,7 @@ import RMButton from "../common/button/RMButton";
 import RMForm from "../common/RMForm";
 import authService from "../../service/AuthService";
 import {notifySuccess} from "../common/notifications";
+import {useSelector} from "react-redux";
 
 const layout = {
   labelCol: {
@@ -16,11 +17,18 @@ const layout = {
 
 const ChangePassword = () => {
   const [form] = Form.useForm();
-
-
+  const user = useSelector((state) => state.user);
+  const token = localStorage.getItem('token');
   const onFinish = (values) => {
-    console.log({values})
-    authService.resetPassword(values)
+
+
+    const newValues = {
+      emil: user.email,
+      token: token,
+      new_password: values.new_password,
+    }
+
+    authService.resetPassword(newValues)
       .then((response) => {
         console.log({response})
         if (response.data.status === false) {
@@ -30,7 +38,7 @@ const ChangePassword = () => {
           return
         }
 
-        notifySuccess("Successfully login")
+        notifySuccess("Successfully change password")
 
       })
       .catch((error) => {
@@ -58,7 +66,7 @@ const ChangePassword = () => {
         backgroundColor: "#ffffff",
         marginTop: "27px"
       }}>
-        <h1 style={{marginBottom: '20px'}}>Change Password</h1>
+        <h4 style={{marginBottom: '20px'}}>Change Password</h4>
         <Form.Item {...layout}
                    name="oldPassword"
                    rules={[{
@@ -98,7 +106,7 @@ const ChangePassword = () => {
           <Input placeholder={'Confirm Password'}/>
         </Form.Item>
 
-        <RMButton type="primary" htmlType="submit">
+        <RMButton style={{marginTop: '10px'}} type="primary" htmlType="submit">
           Change Password
         </RMButton>
       </div>

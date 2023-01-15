@@ -11,9 +11,10 @@ const initialState = {
   source: '',
   affiliate_url: '',
   comission_rate: 0,
-  balance: null,
+  balance: 0,
   paypal_email: '',
-  user_image: ''
+  user_image: '',
+  hold_balance: 0,
 
 }
 

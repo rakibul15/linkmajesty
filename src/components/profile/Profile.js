@@ -67,7 +67,7 @@ const Profile = () => {
             </div>
           </Space>
           {/* -----------Basic Details---------*/}
-          <h1 style={{marginTop: '30px'}}>Basic Details</h1>
+          <h4 style={{marginTop: '30px'}}>Basic Details</h4>
           <RMForm form={form}
                   autoComplete="off"
                   style={{

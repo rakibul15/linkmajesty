@@ -1,19 +1,18 @@
 import React, {useState} from 'react';
-import {Button, Col, Form, Input, InputNumber, Modal, Row} from "antd";
+import {Col, Form, InputNumber, Modal, Row} from "antd";
 import RmCard from "../common/RMCard";
-import EarningTable from "../Earnings/EarningTable";
 import CommonLayout from "../layout/CommonLayout";
 import PaymentTable from "./PaymentTable";
 import RMButton from "../common/button/RMButton";
 import RMForm from "../common/RMForm";
 import {useParams} from "react-router-dom";
 import AllApiService from "../../service/AllApiService";
-import {notifyResponseError, notifySuccess} from "../common/notifications";
+import {notifyError, notifySuccess} from "../common/notifications";
 import {useSelector} from "react-redux";
 
 const Payment = () => {
   const user = useSelector((state) => state.user);
-  const email=user.email;
+  const email = user.email;
   console.log({user})
   const submitPayment = async (values) => {
     await AllApiService.paymentRequest(values)
@@ -26,10 +25,10 @@ const Payment = () => {
         }
       })
       .catch((error) => {
-        notifyResponseError(error.message)
+        console.log(error)
+        notifyError(error.response.data.message)
       });
   };
-
 
 
   const [form] = Form.useForm();
@@ -43,9 +42,9 @@ const Payment = () => {
     },
   };
   const onFinish = (values) => {
-    const newValues={
+    const newValues = {
       ...values,
-      email:email
+      email: email
     }
     submitPayment(newValues)
   }
@@ -66,29 +65,29 @@ const Payment = () => {
   };
 
 
-
   return (
     <CommonLayout>
       <h1 style={{fontWeight: '600', fontSize: '20px'}}>Payments</h1>
       <Row style={{marginTop: '30px'}} gutter={16}>
         <Col md={8}>
-          <RmCard title='Balance On Hold' sign={<i className="fa fa-dollar-sign"></i>} count={188880}
+          <RmCard title='Balance On Hold' sign={<i className="fa fa-dollar-sign"></i>} count={user.hold_balance}
                   icon={<i className="fa fa-dollar-sign"></i>}></RmCard>
         </Col>
 
         <Col md={8}>
-          <RmCard title='Balance' sign={<i className="fa fa-dollar-sign"></i>} count={200000}
+          <RmCard title='Balance' sign={<i className="fa fa-dollar-sign"></i>} count={user.balance}
                   icon={<i className="fa fa-dollar-sign"></i>}></RmCard>
         </Col>
 
-        <Col md={8} style={{alignItems:'center',justifyContent:'center', display:'flex',backgroundColor:'#ffffff'}}>
-           <button className='btn btn-copy' onClick={showModal}>Withdraw</button>
+        <Col md={8}
+             style={{alignItems: 'center', justifyContent: 'center', display: 'flex', backgroundColor: '#ffffff'}}>
+          <button className='btn btn-copy' onClick={showModal}>Withdraw</button>
         </Col>
       </Row>
       <div style={{marginTop: '30px'}}>
         <PaymentTable></PaymentTable>
       </div>
-    {/*  Modal*/}
+      {/*  Modal*/}
       <Modal
         open={open}
         title="withdraw"
@@ -117,7 +116,7 @@ const Payment = () => {
                        required: false, message: "",
                      }]}
           >
-            <InputNumber  min={100}/>
+            <InputNumber style={{width: '100%'}} min={100}/>
           </Form.Item>
 
           {/*------------Billing Address-----------*/}
@@ -129,14 +128,6 @@ const Payment = () => {
 
         </RMForm>
       </Modal>
-
-
-
-
-
-
-
-
 
 
     </CommonLayout>

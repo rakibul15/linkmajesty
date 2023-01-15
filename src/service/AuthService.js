@@ -10,7 +10,7 @@ class AuthService {
   }
 
   resetPassword(value) {
-    return axiosInstance.get('/reset-password', value);
+    return axiosInstance.post('/reset-password', value);
   }
 
   // singleRack(id) {
