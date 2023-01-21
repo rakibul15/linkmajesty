@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react';
 import CommonLayout from "../layout/CommonLayout";
 import {Col, Form, Input, message, Row, Space, Upload} from "antd";
 import RMForm from "../common/RMForm";
-import RmCard from "../common/RMCard";
 import RMButton from "../common/button/RMButton";
 import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import ChangePassword from "./ChangePassword";
 import {LoadingOutlined, PlusOutlined} from '@ant-design/icons';
+import PaypalEmail from "./PaypalEmail";
 
 const Profile = () => {
   const [form] = Form.useForm();
@@ -184,11 +184,8 @@ const Profile = () => {
         <Col md={11}>
           {/*----------Cards----------*/}
           <Row gutter={30} style={{justifyContent: 'space-between'}}>
-            <Col md={12}>
-              <RmCard title='Clicks' count={500} icon={<i className="fa fa-paper-plane"></i>}></RmCard>
-            </Col>
-            <Col md={12}>
-              <RmCard title='Sign up' count={160} icon={<i className="fa fa-user-plus"></i>}></RmCard>
+            <Col md={24}>
+              <PaypalEmail/>
             </Col>
 
           </Row>

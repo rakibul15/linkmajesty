@@ -9,6 +9,7 @@ import {Form} from "react-bootstrap";
 import ChartView from "./chart/ChartView";
 
 const Dashboard = () => {
+  const [range, setRange] = useState('last_month');
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
@@ -41,21 +42,16 @@ const Dashboard = () => {
     try {
       const {data} = await EarningService.getEarnig();
       console.log({data})
-      setEarning(data.lastMonthEarning)
+      setEarning(data.thisMonthEarning)
     } catch (error) {
       console.log("Something went wrong")
     }
   };
 
-  // const clicksAndSignUpTable = async (values) => {
-  //   try {
-  //     const {data} = await EarningService.numberOfSignupData();
-  //     // setSignup(data.count)
-  //   } catch (error) {
-  //     console.log("Something went wrong")
-  //   }
-  // };
-
+  // const handleChangerange = (e) => {
+  //   console.log(e.target.value)
+  //   setRange(e.target.value)
+  // }
 
   //API CALL
   useEffect(() => {
@@ -101,7 +97,7 @@ const Dashboard = () => {
           <RmCard title='Sign up' count={signup} icon={<i className="fa fa-user-plus"></i>}></RmCard>
         </Col>
         <Col md={6}>
-          <RmCard title='Earnings' sign={<i className="fa fa-dollar-sign"></i>} count={earning}
+          <RmCard title='This Month Earnings' sign={<i className="fa fa-dollar-sign"></i>} count={earning}
                   icon={<i className="fa fa-dollar-sign"></i>}></RmCard>
         </Col>
         <Col md={6}>
@@ -119,16 +115,16 @@ const Dashboard = () => {
       }}>
         <Row style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
           <Col><a href>Clicks & Signup</a></Col>
-          <Col> <Form.Select aria-label="Default select example">
+          <Col> <Form.Select onChange={(e) => setRange(e.target.value)} aria-label="Default select example">
             {/*<option></option>*/}
-            <option value="1">Last 30 Days</option>
-            <option value="2">Last 6 Months</option>
-            <option value="3">All Time</option>
+            <option value="last_month">Last 30 Days</option>
+            <option value="last_6_month">Last 6 Months</option>
+            <option value="last_year">Last Year</option>
           </Form.Select></Col>
         </Row>
         <Row style={{justifyContent: 'center'}}>
           <Col md={12}>
-            <ChartView/>
+            <ChartView range={range} setRange={setRange}/>
           </Col>
         </Row>
       </div>

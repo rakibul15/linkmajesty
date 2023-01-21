@@ -19,34 +19,49 @@ export const options = {
     },
     title: {
       display: true,
-      text: 'ChartView.js Bar ChartView',
+      text: 'Clicks & Signup Chart',
     },
   },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: [1, 3, 4, 5, 6, 6, 7, 7],
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-    {
-      label: 'Dataset 2',
-      data: [2, 4, 6, 7, 8, 8, 9, 9, , 3],
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
-  ],
-};
+function getLast30Days() {
+  let output = [];
+  let monthName = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+  let d = new Date();
+  for (let i = 0; i < 30; i++) {
+    output.push(d.getDate() + " " + monthName[d.getMonth()] + " " + d.getFullYear());
+    d.setDate(d.getDate() - 1);
+  }
+  return output
+}
 
 
-const ChartView = () => {
+const ChartView = ({range, setRange}) => {
   const [signup, setSignup] = useState()
-  const clicksAndSignUpTable = async (values) => {
+  const [labels, setLabels] = useState(getLast30Days())
+  console.log({range})
+
+
+  let data = {
+    labels,
+    datasets: [
+      {
+        label: 'Clicks',
+        data: [1, 3, 4, 5, 6, 6, 7, 7],
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      },
+      {
+        label: 'Signup',
+        data: [2, 4, 6, 7, 8, 8, 9, 9, , 3],
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
+    ],
+  };
+
+
+  const clicksAndSignUpTable = async (range) => {
     try {
-      const {data} = await EarningService.numberOfSignupData();
+      const {data} = await EarningService.numberOfFilterClick(range);
       // setSignup(data.count)
     } catch (error) {
       console.log("Something went wrong")
@@ -55,9 +70,9 @@ const ChartView = () => {
   //API CALL
   useEffect(() => {
     (async () => {
-      await clicksAndSignUpTable()
+      await clicksAndSignUpTable(range)
     })();
-  }, []);
+  }, [range]);
 
 
   return (

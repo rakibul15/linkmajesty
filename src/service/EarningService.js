@@ -17,8 +17,8 @@ class EarningService {
     return axiosInstance.get('/filter-signup-data',);
   }
 
-  numberOfFilterClick() {
-    return axiosInstance.get('/filter-click-log-data?range=last_month',);
+  numberOfFilterClick(date) {
+    return axiosInstance.get(`/filter-click-log-data?range=${date}`);
   }
 
   getEarnig() {

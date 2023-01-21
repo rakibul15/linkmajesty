@@ -38,7 +38,7 @@ const Earnings = () => {
         </Col>
 
         <Col md={8}>
-          <RmCard title='LastMonth Earning' sign={<i className="fa fa-dollar-sign"></i>} count={lastMonthEarning}
+          <RmCard title='Last Month Earning' sign={<i className="fa fa-dollar-sign"></i>} count={lastMonthEarning}
                   icon={<i className="fa fa-dollar-sign"></i>}></RmCard>
         </Col>
 

@@ -87,7 +87,7 @@ const Signin = () => {
               >
 
                 <Form.Item
-                  name="Email"
+                  name="email"
                   rules={[{
                     required: true, message: "Please input email",
                   }, {
@@ -100,7 +100,7 @@ const Signin = () => {
                 </Form.Item>
 
                 <Form.Item
-                  name="Password"
+                  name="password"
                   rules={[{
                     required: true, message: "Please input password",
                   }, {
