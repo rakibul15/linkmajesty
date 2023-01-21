@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Col, Row, Space, Spin} from "antd";
+import {Col, notification, Row, Space, Spin} from "antd";
 import logo from "../../logo.png";
-import {useSearchParams} from "react-router-dom";
-import authService from "../../service/AuthService";
-import {notifySuccess} from "../common/notifications";
+import {useNavigate, useSearchParams} from "react-router-dom";
+import axios from "axios";
 
 const Validate = () => {
+  let navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [varified, setVarified] = useState(false)
   const [loading, SetLoading] = useState(true)
@@ -14,13 +14,23 @@ const Validate = () => {
 
   const EmailVerify = async (emailVeifyData) => {
     try {
-      const {data} = await authService.Validate(emailVeifyData);
+      const {data} = await axios.post('http://34.27.11.233/v1/affiliate/verify-user-email', emailVeifyData);
       console.log("===========>", data)
       if (data?.status === true) {
         setVarified(true)
-        notifySuccess("Email Successfully Verified")
+        notification["success"]({
+          message: data.message,
+        });
+        navigate('/signin')
+
       }
-      setVarified(false)
+      if (data?.status === false) {
+        notification["error"]({
+          message: data.message,
+        });
+
+      }
+
       SetLoading(false)
 
     } catch (error) {

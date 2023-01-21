@@ -17,6 +17,10 @@ class AuthService {
     return axiosInstance.post('/verify-user-email', value);
   }
 
+  VerifyResetPassword(value) {
+    return axiosInstance.post('/verify-reset-password', value);
+  }
+
 
 }
 

@@ -4,8 +4,32 @@ import "./Authentication.css";
 import {Col, Form, Input, Row} from "antd";
 import RMButton from "../common/button/RMButton";
 import logo from '../../logo.png'
+import RMForm from "../common/RMForm";
+import authService from "../../service/AuthService";
+import {notifySuccess} from "../common/notifications";
 
-const passwordReset = () => {
+const PasswordReset = () => {
+
+  const [form] = Form.useForm();
+  const handleReset = async (values) => {
+    try {
+      const {data} = await authService.resetPassword(values);
+      if (data.status == true) {
+        notifySuccess("A password reset link has been sent to your email")
+      }
+      console.log({data})
+
+    } catch (error) {
+      console.log("Something went wrong")
+    }
+  };
+
+
+  const onFinish = (values) => {
+    handleReset(values)
+    form.resetFields();
+  }
+
 
   return (
     <>
@@ -28,30 +52,40 @@ const passwordReset = () => {
             }}>
 
               <div style={{marginBottom: '30px'}}>
-                <h1>Reset Password</h1>
-                <h4 style={{marginTop: '0px', marginBottom: '15px'}}>Enter your email to reset password
-
-                </h4>
+                <h3>Reset Password</h3>
               </div>
 
-
-              <Form.Item
-                name="Email"
-                rules={[{
-                  required: false, message: "",
-                }, {
-                  whitespace: true,
-                  message: "Only space is not allowed",
-                },]}
-                style={{marginTop: '15px'}}
+              <RMForm
+                form={form}
+                name="store"
+                autoComplete="off"
+                style={{
+                  backgroundColor: "#ffffff",
+                }}
+                onFinish={onFinish}
               >
-                <Input size={"large"} type={'email'} placeholder={'Email'}/>
-              </Form.Item>
-              <RMButton size={'large'} style={{width: '100%', fontSize: '19px', padding: '0px', marginTop: '5px'}}
-                        type="primary"
-                        htmlType="submit">
-                Send
-              </RMButton>
+
+                <Form.Item
+                  name="email"
+                  rules={[{
+                    required: false, message: "",
+                  }, {
+                    whitespace: true,
+                    message: "Only space is not allowed",
+                  },]}
+                  style={{marginTop: '15px'}}
+                >
+                  <Input size={"large"} type={'email'} placeholder={'Email'}/>
+                </Form.Item>
+
+                <RMButton size={'large'} style={{width: '100%', fontSize: '19px', padding: '0px', marginTop: '5px'}}
+                          type="primary"
+                          htmlType="submit">
+                  Send
+                </RMButton>
+              </RMForm>
+
+
               <Form.Item style={{marginTop: '35px'}}>
                 <h4>Remember Password? <Link to={"/signin"}>Sign In</Link></h4>
               </Form.Item>
@@ -63,4 +97,4 @@ const passwordReset = () => {
   );
 };
 
-export default passwordReset;
+export default PasswordReset;

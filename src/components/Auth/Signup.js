@@ -28,8 +28,8 @@ const Signup = () => {
   const handleSubmit = async (values) => {
     try {
       const {data} = await authService.register(values);
-      navigate("/signin");
       notifySuccess("An Email sent to your mail")
+      navigate("/signin");
 
     } catch (error) {
       notifyError("Email Already Registered")
@@ -68,7 +68,7 @@ const Signup = () => {
             marginBottom: '40px',
           }}>
             <h3>Sign Up</h3>
-            <h4>Don't have an account? Create your account, it takes less than a minute</h4>
+            <p>Don't have an account? Create your account, it takes less than a minute</p>
             <RMForm
               form={form}
               name="store"

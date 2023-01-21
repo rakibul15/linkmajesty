@@ -16,6 +16,8 @@ const Dashboard = () => {
   const text = "https://linkmajesty.com/" + user.affiliate_url;
   const [count, setCount] = useState()
   const [signup, setSignup] = useState()
+  const [earning, setEarning] = useState()
+
 
   const numberOfClick = async (values) => {
     try {
@@ -31,6 +33,15 @@ const Dashboard = () => {
     try {
       const {data} = await EarningService.numberOfSignup();
       setSignup(data.count)
+    } catch (error) {
+      console.log("Something went wrong")
+    }
+  };
+  const getEarning = async (values) => {
+    try {
+      const {data} = await EarningService.getEarnig();
+      console.log({data})
+      setEarning(data.lastMonthEarning)
     } catch (error) {
       console.log("Something went wrong")
     }
@@ -51,6 +62,7 @@ const Dashboard = () => {
     (async () => {
       await numberOfClick()
       await numberOfSignup()
+      await getEarning()
     })();
   }, []);
 
@@ -89,7 +101,7 @@ const Dashboard = () => {
           <RmCard title='Sign up' count={signup} icon={<i className="fa fa-user-plus"></i>}></RmCard>
         </Col>
         <Col md={6}>
-          <RmCard title='Earnings' sign={<i className="fa fa-dollar-sign"></i>} count={"123"}
+          <RmCard title='Earnings' sign={<i className="fa fa-dollar-sign"></i>} count={earning}
                   icon={<i className="fa fa-dollar-sign"></i>}></RmCard>
         </Col>
         <Col md={6}>

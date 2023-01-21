@@ -15,6 +15,8 @@ const Signin = () => {
   let navigate = useNavigate();
   let dispatch = useDispatch();
   const [form] = Form.useForm();
+
+
   const handleLogin = async (values) => {
     authService.login(values)
       .then((response) => {
@@ -69,10 +71,10 @@ const Signin = () => {
               boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px"
             }}>
               <div style={{marginBottom: '30px'}}>
-                <h1>Sing In</h1>
-                <h4 style={{marginTop: '0px', marginBottom: '15px'}}>Backlink Management System
+                <h3>Sign In</h3>
+                <p style={{marginTop: '0px', marginBottom: '15px'}}>Affiliate Management System
 
-                </h4>
+                </p>
               </div>
               <RMForm
                 form={form}

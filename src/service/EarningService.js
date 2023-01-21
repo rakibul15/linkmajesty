@@ -21,6 +21,10 @@ class EarningService {
     return axiosInstance.get('/filter-click-log-data?range=last_month',);
   }
 
+  getEarnig() {
+    return axiosInstance.get('/get-earning-info',);
+  }
+
 
 }
 
