@@ -1,8 +1,8 @@
 import axiosInstance from "./Api";
 
 class EarningService {
-  earningList() {
-    return axiosInstance.get('/get-earning-list',);
+  earningList(currentPage) {
+    return axiosInstance.get(`/get-earning-list?page=${currentPage}`);
   }
 
   numberOfSignup() {

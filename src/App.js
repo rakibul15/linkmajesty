@@ -16,6 +16,7 @@ import {setUser} from "./reducers/user.reducer";
 import ProtectRoute from "./components/Auth/protectedRoute/ProtectedRoute";
 import './css/style.css'
 import Payment from "./components/payment/Payment";
+import Validate from "./components/Auth/Validate";
 
 const {Header, Content} = Layout;
 
@@ -65,6 +66,7 @@ function App() {
         <Route path="/signup" element={<Signup/>} exact/>
         <Route path="/signin" element={<Signin/>} exact/>
         <Route path="/reset-password" element={<PasswordReset/>} exact/>
+        <Route path="/validate" element={<Validate/>} exact/>
       </Routes>
     </AppProvider>
   );

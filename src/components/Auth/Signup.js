@@ -1,26 +1,41 @@
 import React, {useState} from 'react';
-import {Checkbox, Col, Form, Input, Row} from "antd";
+import {Checkbox, Col, Form, Input, Row, Select} from "antd";
 import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons";
 import RMButton from "../common/button/RMButton";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import logo from "../../logo.png";
 import RMForm from "../common/RMForm";
-import {notifySuccess} from "../common/notifications";
+import {notifyError, notifySuccess} from "../common/notifications";
 import authService from "../../service/AuthService";
+import country from '../../components/Country.json'
 
 const Signup = () => {
+  let navigate = useNavigate();
+  const countryVal = country;
+
   const [check, setCheck] = useState(false)
   const [form] = Form.useForm();
   const onChange = (e) => {
-    setCheck(e.target.checked)
   };
-  const handleSubmit = async (updateValues) => {
+  const onSearch = (e) => {
+
+  }
+  const handleCheck = (e) => {
+    setCheck(e.target.checked)
+  }
+
+
+  const handleSubmit = async (values) => {
     try {
-      const {data} = await authService.register(updateValues);
+      const {data} = await authService.register(values);
+      navigate("/signin");
       notifySuccess("An Email sent to your mail")
 
     } catch (error) {
-      console.log("error", error)
+      notifyError("Email Already Registered")
+      navigate("/signup");
+
+      return
     }
   };
 
@@ -41,7 +56,7 @@ const Signup = () => {
           alignItems: 'center',
           textAlign: 'center'
         }}>
-        <Col md={7}
+        <Col xs={20} sm={18} md={10} lg={7} xl={7}
         >
           <div style={{marginBottom: '35px', marginTop: "50px"}}><img style={{height: '54px', width: '300px'}}
                                                                       src={logo} alt=""/></div>
@@ -52,7 +67,7 @@ const Signup = () => {
             boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
             marginBottom: '40px',
           }}>
-            <h1>Sing Up</h1>
+            <h3>Sign Up</h3>
             <h4>Don't have an account? Create your account, it takes less than a minute</h4>
             <RMForm
               form={form}
@@ -68,12 +83,12 @@ const Signup = () => {
               <Form.Item
                 name="Name"
                 rules={[{
-                  required: false, message: "",
+                  required: true, message: "Please input Name",
                 }, {
                   whitespace: true,
                   message: "Only space is not allowed",
                 },]}
-                style={{marginTop: '15px'}}
+                style={{marginTop: '15px', textAlign: 'left'}}
               >
                 <Input size={"large"} placeholder={'Name'}/>
               </Form.Item>
@@ -81,12 +96,12 @@ const Signup = () => {
               <Form.Item
                 name="Email"
                 rules={[{
-                  required: false, message: "",
+                  required: true, message: "Please input an Email",
                 }, {
                   whitespace: true,
                   message: "Only space is not allowed",
                 },]}
-                style={{marginTop: '15px'}}
+                style={{marginTop: '15px', textAlign: 'left'}}
               >
                 <Input size={"large"} type={'email'} placeholder={'Email'}/>
               </Form.Item>
@@ -94,12 +109,12 @@ const Signup = () => {
               <Form.Item
                 name="Password"
                 rules={[{
-                  required: false, message: "",
+                  required: true, message: "Please input Password",
                 }, {
                   whitespace: true,
                   message: "Only space is not allowed",
                 },]}
-                style={{marginTop: '15px'}}
+                style={{marginTop: '15px', textAlign: 'left'}}
               >
                 <Input.Password
                   size={"large"}
@@ -110,22 +125,36 @@ const Signup = () => {
               <Form.Item
                 name="Country"
                 rules={[{
-                  required: false, message: "",
+                  required: true, message: "Please select a country",
                 }, {
                   whitespace: true,
                   message: "Only space is not allowed",
                 },]}
-                style={{marginTop: '15px'}}
+                style={{marginTop: '15px', textAlign: 'left'}}
+
               >
-                <Input size={"large"} placeholder={'Country'}/>
+                <Select size={"large"} showSearch
+                        placeholder="Select a Country"
+                        optionFilterProp="children"
+                        onChange={onChange}
+                        onSearch={onSearch}
+                        filterOption={(input, option) =>
+                          (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                        }
+
+                        options={countryVal}
+                />
               </Form.Item>
               <Form.Item style={{textAlign: 'left'}}>
-                <Checkbox onChange={onChange}>Agree to <a href="https://linkmajesty.com/terms-of-service/">terms and
+                <Checkbox rules={[{
+                  required: true, message: "Please Check terms and condition",
+                },]} onChange={handleCheck}>Agree to <a href="https://linkmajesty.com/terms-of-service/">terms and
                   conditions</a></Checkbox>
 
               </Form.Item>
 
-              <RMButton size={'large'} style={{width: '100%', fontSize: '19px', padding: '0px'}}
+              <RMButton disabled={check === false} size={'large'}
+                        style={{width: '100%', fontSize: '20px', padding: '0px'}}
                         type="primary"
                         htmlType="submit">
                 Sign Up

@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import CommonLayout from "./layout/CommonLayout";
 import {Col, Row} from "antd";
 import RmCard from "./common/RMCard";
-import {Column} from "@ant-design/charts";
 import {useSelector} from "react-redux";
 import EarningService from "../service/EarningService";
 import {notifySuccess} from "./common/notifications";
@@ -37,14 +36,14 @@ const Dashboard = () => {
     }
   };
 
-  const clicksAndSignUpTable = async (values) => {
-    try {
-      const {data} = await EarningService.numberOfSignupData();
-      // setSignup(data.count)
-    } catch (error) {
-      console.log("Something went wrong")
-    }
-  };
+  // const clicksAndSignUpTable = async (values) => {
+  //   try {
+  //     const {data} = await EarningService.numberOfSignupData();
+  //     // setSignup(data.count)
+  //   } catch (error) {
+  //     console.log("Something went wrong")
+  //   }
+  // };
 
 
   //API CALL
@@ -52,7 +51,6 @@ const Dashboard = () => {
     (async () => {
       await numberOfClick()
       await numberOfSignup()
-      await clicksAndSignUpTable()
     })();
   }, []);
 

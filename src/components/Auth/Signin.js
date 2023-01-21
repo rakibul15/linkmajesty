@@ -18,7 +18,6 @@ const Signin = () => {
   const handleLogin = async (values) => {
     authService.login(values)
       .then((response) => {
-        console.log({response})
         localStorage.setItem("userId", `${response.data.id}`);
         localStorage.setItem("token", `${response.data.token}`);
         localStorage.setItem("refreshToken", `${response.data.refreshToken}`);
@@ -28,9 +27,7 @@ const Signin = () => {
           });
           return
         }
-
-        dispatch(setUser(response.data.account));
-        console.log("///", response.data.account)
+        dispatch(setUser(response.data?.account));
         // dispatch(setMenu({ key: '' }));
         notifySuccess("Successfully login")
         navigate("/");
@@ -90,12 +87,12 @@ const Signin = () => {
                 <Form.Item
                   name="Email"
                   rules={[{
-                    required: false, message: "",
+                    required: true, message: "Please input email",
                   }, {
                     whitespace: true,
                     message: "Only space is not allowed",
                   },]}
-                  style={{marginTop: '15px'}}
+                  style={{marginTop: '15px', textAlign: 'left'}}
                 >
                   <Input size={"large"} type={'email'} placeholder={'Email'}/>
                 </Form.Item>
@@ -103,12 +100,12 @@ const Signin = () => {
                 <Form.Item
                   name="Password"
                   rules={[{
-                    required: false, message: "",
+                    required: true, message: "Please input password",
                   }, {
                     whitespace: true,
                     message: "Only space is not allowed",
                   },]}
-                  style={{marginTop: '15px', marginBottom: '0px'}}
+                  style={{marginTop: '15px', marginBottom: '0px', textAlign: 'left'}}
                 >
                   <Input.Password
                     size={"large"}
@@ -125,7 +122,7 @@ const Signin = () => {
                 <RMButton size={'large'} style={{width: '100%', fontSize: '19px', padding: '0px', marginTop: '15px'}}
                           type="primary"
                           htmlType="submit">
-                  Sign Up
+                  Sign in
                 </RMButton>
                 <Form.Item style={{marginTop: '35px'}}>
                   <h4>Don't have an account? <Link to={"/signup"}>Sign Up</Link></h4>
