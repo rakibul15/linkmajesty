@@ -11,32 +11,55 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-export const options = {
+// export const options = {
+//   responsive: true,
+//   plugins: {
+//     legend: {
+//       position: 'top',
+//     },
+//     title: {
+//       display: true,
+//       text: 'Clicks & Signup Chart',
+//     },
+//   },
+// };
+// const options = {
+//   scales: {
+//     y: {
+//       beginAtZero: true,
+//       max: 20  // this sets the minimum height for the bars
+//     }
+//   }
+// }
+const options = {
   responsive: true,
-  plugins: {
-    legend: {
-      position: 'top',
-      offsetX: 50
-    },
-    title: {
-      display: true,
-      text: 'Clicks & Signup Chart',
-    },
-    scales: {
-      yAxes: [
-        {
-          display: true,
-          ticks: {
-            beginAtZero: true,
-            steps: 10,
-            stepValue: 5,
-            max: 100
-          }
-        }
-      ]
-    }
+  maintainAspectRatio: false,
+  hover: {
+    mode: 'nearest',
+    intersect: true
   },
-};
+  scales: {
+    y: {
+      beginAtZero: true,
+      min: 0,
+      max: 20
+    }
+  }
+  // scales: {
+  //   y: {
+  //     beginAtZero: true,
+  //     stepSize: 5,
+  //     max: 20,
+  //     callback: function (value, index, values) {
+  //       if (value % 5 === 0) {
+  //         return value;
+  //       }
+  //     }
+  //   }
+  // }
+}
+
+
 const monthName = new Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
 
 function getLast30Days() {
