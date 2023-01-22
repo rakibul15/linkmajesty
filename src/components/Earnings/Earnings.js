@@ -31,18 +31,18 @@ const Earnings = () => {
   return (
     <CommonLayout>
       <h1 style={{fontWeight: '600', fontSize: '20px'}}>Earnings</h1>
-      <Row style={{marginTop: '30px'}} gutter={16}>
-        <Col md={8}>
+      <Row style={{marginTop: '30px'}} gutter={[16, 16]}>
+        <Col xs={24} sm={12} md={12} lg={8} xl={8}>
           <RmCard title='This Month Earning' sign={<i className="fa fa-dollar-sign"></i>} count={thisMonthEarning}
                   icon={<i className="fa fa-dollar-sign"></i>}></RmCard>
         </Col>
 
-        <Col md={8}>
+        <Col xs={24} sm={12} md={12} lg={8} xl={8}>
           <RmCard title='Last Month Earning' sign={<i className="fa fa-dollar-sign"></i>} count={lastMonthEarning}
                   icon={<i className="fa fa-dollar-sign"></i>}></RmCard>
         </Col>
 
-        <Col md={8}>
+        <Col xs={24} sm={12} md={12} lg={8} xl={8}>
           <RmCard title='Total Earning' sign={<i className="fa fa-dollar-sign"></i>} count={totalEarning}
                   icon={<i className="fa fa-dollar-sign"></i>}></RmCard>
         </Col>

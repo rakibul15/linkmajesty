@@ -91,6 +91,10 @@ const NewPassword = () => {
                       required: true,
                       message: 'Please input your password!',
                     },
+                    {
+                      whitespace: true,
+                      message: "Only space is not allowed",
+                    }
                   ]}
                   hasFeedback
                   style={{marginTop: '15px', textAlign: 'left'}}
@@ -110,6 +114,10 @@ const NewPassword = () => {
                     {
                       required: true,
                       message: 'Please confirm your password!',
+                    },
+                    {
+                      whitespace: true,
+                      message: "Only space is not allowed",
                     },
                     ({getFieldValue}) => ({
                       validator(_, value) {

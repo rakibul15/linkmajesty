@@ -21,8 +21,16 @@ class EarningService {
     return axiosInstance.get(`/filter-click-log-data?range=${date}`);
   }
 
+  numberOfFilterSignup(date) {
+    return axiosInstance.get(`/filter-click-log-data?range=${date}`);
+  }
+
   getEarnig() {
     return axiosInstance.get('/get-earning-info',);
+  }
+
+  updatePaypal(values) {
+    return axiosInstance.post('/update-paypal-email', values);
   }
 
 

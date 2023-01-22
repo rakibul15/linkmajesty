@@ -68,20 +68,34 @@ const Payment = () => {
   return (
     <CommonLayout>
       <h1 style={{fontWeight: '600', fontSize: '20px'}}>Payments</h1>
-      <Row style={{marginTop: '30px'}} gutter={16}>
-        <Col md={8}>
-          <RmCard title='Balance On Hold' sign={<i className="fa fa-dollar-sign"></i>} count={user.hold_balance}
+      <Row style={{marginTop: '30px'}} gutter={[16, 16]}>
+        <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+          <RmCard style={{height: '100px'}} title='Balance On Hold' sign={<i className="fa fa-dollar-sign"></i>}
+                  count={user.hold_balance}
                   icon={<i className="fa fa-dollar-sign"></i>}></RmCard>
         </Col>
 
-        <Col md={8}>
-          <RmCard title='Balance' sign={<i className="fa fa-dollar-sign"></i>} count={user.balance}
+        <Col xs={24} sm={24} md={12} lg={8} xl={8}>
+          <RmCard style={{height: '100px'}} title='Balance' sign={<i className="fa fa-dollar-sign"></i>}
+                  count={user.balance}
                   icon={<i className="fa fa-dollar-sign"></i>}></RmCard>
         </Col>
 
-        <Col md={8}
-             style={{alignItems: 'center', justifyContent: 'center', display: 'flex', backgroundColor: '#ffffff'}}>
-          <button className='btn btn-copy' onClick={showModal}>Withdraw</button>
+        <Col xs={24} sm={24} md={12} lg={8} xl={8}
+             style={{
+               paddingLeft: '10px'
+             }}>
+          <div style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            display: 'flex',
+            backgroundColor: '#ffffff',
+            height: '114px',
+            padding: '14px'
+          }}>
+            <button className='btn btn-copy' onClick={showModal}>Withdraw</button>
+          </div>
+
         </Col>
       </Row>
       <div style={{marginTop: '30px'}}>

@@ -80,111 +80,99 @@ const Profile = () => {
       <h1 style={{fontWeight: '600', fontSize: '20px', marginLeft: '20px', marginBottom: '30px'}}>Profile</h1>
 
       {/* --------Profile section---------*/}
-      <Row style={{justifyContent: 'space-around'}}>
-        <Col md={12}
-             style={{
-               paddingLeft: "40px",
-               paddingRight: '80px',
-               paddingTop: '30px',
-               paddingBottom: '40px',
-               backgroundColor: "#ffffff"
-             }}>
-          {/*--------Profile Image and Name----------*/}
-          <Space style={{display: "flex", alignItems: 'flex-end'}}>
-            {/*<Avatar size={50} style={{marginTop: '30px'}}*/}
-            {/*        src={*/}
-            {/*          <Image*/}
-            {/*            src="https://joeschmoe.io/api/v1/random"*/}
-            {/*            style={{*/}
-            {/*              width: 50,*/}
-            {/*              height: 50*/}
-            {/*            }}*/}
-            {/*          />*/}
-            {/*        }*/}
-            {/*/>*/}
+      <Row gutter={[24, 24]} style={{justifyContent: 'space-around'}}>
+        <Col xs={24} sm={24} md={24} lg={12} xl={12}
+        >
+          <div style={{
+            paddingLeft: "40px",
+            paddingRight: '80px',
+            paddingTop: '30px',
+            paddingBottom: '40px',
+            backgroundColor: "#ffffff"
+          }}>
 
-            {/*<div style={{backgroundImage: `url(${photo})`}} className="custom-file-upload">*/}
-            {/*  <input type="file" id="file-upload" accept="image/*"/>*/}
-            {/*  <label htmlFor="file-upload">Choose file</label>*/}
-            {/*</div>*/}
 
-            <Upload
-              name="user_image"
-              listType="picture-card"
-              className="avatar-uploader"
-              showUploadList={false}
-              action='{http://34.27.11.233/v1/affiliate/update-user-image'
-              beforeUpload={beforeUpload}
-              onChange={handleChange}
+            {/*--------Profile Image and Name----------*/}
+            <Space style={{display: "flex", alignItems: 'flex-end'}}>
+              <Upload
+                name="user_image"
+                listType="picture-card"
+                className="avatar-uploader"
+                showUploadList={false}
+                action='{http://34.27.11.233/v1/affiliate/update-user-image'
+                beforeUpload={beforeUpload}
+                onChange={handleChange}
+              >
+                {imageUrl ? (
+                  <img
+                    src={imageUrl}
+                    alt="avatar"
+                    style={{
+                      width: '100%',
+                    }}
+                  />
+                ) : (
+                  uploadButton
+                )}
+              </Upload>
+
+
+              <div>
+                <p style={{marginBottom: '0px'}}>{user.name}</p>
+                <small>frghftg</small>
+              </div>
+            </Space>
+            {/* -----------Basic Details---------*/}
+            <h4 style={{marginTop: '30px'}}>Basic Details</h4>
+            <RMForm form={form}
+                    autoComplete="off"
+                    style={{
+                      backgroundColor: "#ffffff",
+                    }}
+                    onFinish={onFinish}
+
             >
-              {imageUrl ? (
-                <img
-                  src={imageUrl}
-                  alt="avatar"
-                  style={{
-                    width: '100%',
-                  }}
-                />
-              ) : (
-                uploadButton
-              )}
-            </Upload>
+              <Form.Item {...layout}
+                         label="Full Name"
+                         name="name"
+                         rules={[{
+                           required: false, message: "",
+                         }, {
+                           whitespace: true,
+                           message: "Only space is not allowed",
+                         },]}
+              >
+                <Input size={"large"} type={'texts'}/>
+              </Form.Item>
 
+              <Form.Item {...layout}
+                         label="Email"
+                         name="email"
+                         rules={[{
+                           required: false, message: "",
+                         }, {
+                           whitespace: true,
+                           message: "Only space is not allowed",
+                         },]}
+              >
+                <Input size={"large"} type={'email'}/>
+              </Form.Item>
+              {/*------------Billing Address-----------*/}
+              <Row gutter={16}>
+                <RMButton size={'large'} style={{marginTop: '15px', marginLeft: '6px'}} type="primary"
+                          htmlType="submit">
+                  {id ? "Update" : "Submit"}
+                </RMButton>
+              </Row>
 
-            <div>
-              <p style={{marginBottom: '0px'}}>{user.name}</p>
-              <small>frghftg</small>
-            </div>
-          </Space>
-          {/* -----------Basic Details---------*/}
-          <h4 style={{marginTop: '30px'}}>Basic Details</h4>
-          <RMForm form={form}
-                  autoComplete="off"
-                  style={{
-                    backgroundColor: "#ffffff",
-                  }}
-                  onFinish={onFinish}
-
-          >
-            <Form.Item {...layout}
-                       label="Full Name"
-                       name="name"
-                       rules={[{
-                         required: false, message: "",
-                       }, {
-                         whitespace: true,
-                         message: "Only space is not allowed",
-                       },]}
-            >
-              <Input/>
-            </Form.Item>
-
-            <Form.Item {...layout}
-                       label="Email"
-                       name="email"
-                       rules={[{
-                         required: false, message: "",
-                       }, {
-                         whitespace: true,
-                         message: "Only space is not allowed",
-                       },]}
-            >
-              <Input type={'email'}/>
-            </Form.Item>
-            {/*------------Billing Address-----------*/}
-            <Row gutter={16}>
-              <RMButton style={{marginTop: '15px', marginLeft: '6px'}} type="primary" htmlType="submit">
-                {id ? "Update" : "Submit"}
-              </RMButton>
-            </Row>
-
-          </RMForm>
+            </RMForm>
+          </div>
         </Col>
         {/*------------Card and Password Section-----------*/}
-        <Col md={11}>
+        <Col xs={24} sm={24} md={24} lg={12} xl={12}>
           {/*----------Cards----------*/}
           <Row gutter={30} style={{justifyContent: 'space-between'}}>
-            <Col md={24}>
+            <Col xs={24} sm={24} md={24} lg={24}>
               <PaypalEmail/>
             </Col>
 

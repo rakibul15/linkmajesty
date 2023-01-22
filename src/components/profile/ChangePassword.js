@@ -5,6 +5,7 @@ import RMForm from "../common/RMForm";
 import {useSelector} from "react-redux";
 import authService from "../../service/AuthService";
 import {notifyError} from "../common/notifications";
+import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons";
 
 const layout = {
   labelCol: {
@@ -39,28 +40,6 @@ const ChangePassword = () => {
       // notifyError(error.message)
     }
   };
-
-  // const VarifySignin = async (values) => {
-  //   authService.login(values)
-  //     .then((response) => {
-  //       if (response.data.status === false) {
-  //         notification["error"]({
-  //           message: response.data.message,
-  //         });
-  //         return
-  //       }
-  //       passwordReset()
-  //
-  //     })
-  //     .catch((error) => {
-  //       notification["error"]({
-  //         message: "Username or password invalid",
-  //       });
-  //       console.log("something went wrong", error);
-  //     });
-  //
-  //
-  // };
 
 
   const onFinish = (values) => {
@@ -110,7 +89,7 @@ const ChangePassword = () => {
         paddingLeft: "40px",
         paddingRight: '80px',
         paddingTop: '30px',
-        paddingBottom: '40px',
+        paddingBottom: '20px',
         backgroundColor: "#ffffff",
         marginTop: "27px"
       }}>
@@ -118,43 +97,65 @@ const ChangePassword = () => {
         <Form.Item {...layout}
                    name="password"
                    rules={[{
-                     required: false, message: "",
+                     required: true, message: "Please input current password",
                    }, {
                      whitespace: true,
                      message: "Only space is not allowed",
                    },]}
                    style={{marginTop: '15px'}}
         >
-          <Input placeholder={'Old Password'}/>
+          <Input.Password
+            placeholder="Old Password"
+            iconRender={(visible) => (visible ? <EyeTwoTone/> : <EyeInvisibleOutlined/>)}
+          />
         </Form.Item>
 
         <Form.Item {...layout}
                    name="new_password"
                    rules={[{
-                     required: false, message: "",
+                     required: true, message: "Please input new password",
                    }, {
                      whitespace: true,
                      message: "Only space is not allowed",
                    },]}
                    style={{marginTop: '15px'}}
         >
-          <Input placeholder={'New Password'}/>
+          <Input.Password
+            placeholder="New Password"
+            iconRender={(visible) => (visible ? <EyeTwoTone/> : <EyeInvisibleOutlined/>)}
+          />
         </Form.Item>
 
         <Form.Item {...layout}
                    name="confirmPassword"
-                   rules={[{
-                     required: false, message: "",
-                   }, {
-                     whitespace: true,
-                     message: "Only space is not allowed",
-                   },]}
+                   rules={[
+                     {
+                       required: true,
+                       message: 'Please confirm your password!',
+                     },
+                     {
+                       whitespace: true,
+                       message: "Only space is not allowed",
+                     },
+                     ({getFieldValue}) => ({
+                       validator(_, value) {
+                         if (!value || getFieldValue('new_password') === value) {
+                           return Promise.resolve();
+                         }
+                         return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                       },
+                     }),
+                   ]}
+                   hasFeedback
                    style={{marginTop: '15px'}}
         >
-          <Input placeholder={'Confirm Password'}/>
+          <Input.Password
+            placeholder="Confirm Password"
+            iconRender={(visible) => (visible ? <EyeTwoTone/> : <EyeInvisibleOutlined/>)}
+          />
         </Form.Item>
 
-        <RMButton style={{marginTop: '10px'}} type="primary" htmlType="submit">
+        <RMButton size={'large'} style={{marginTop: '10px'}} type="primary" htmlType="submit">
           Change Password
         </RMButton>
       </div>

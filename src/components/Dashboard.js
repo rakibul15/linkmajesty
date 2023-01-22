@@ -70,12 +70,12 @@ const Dashboard = () => {
         <h6 style={{color: '#4385F4', fontSize: '17px', marginBottom: '10px'}}>Share & Earn
           Commission</h6>
         <div className="row earning-link m-1 justify-content-between d-flex align-items-center">
-          <div className="col-sm-11">
+          <div className=" col-xs-6 col-sm-9 col-lg-10 col-xl-11">
             <div className="affiliate-url">
               <p>{"https://linkmajesty.com/" + user.affiliate_url}</p>
             </div>
           </div>
-          <div className="col-sm-1 affiliate-url text-right" onClick={() => {
+          <div className="col-xs-6 col-sm-3 col-lg-2 col-xl-1 affiliate-url text-right" onClick={() => {
             navigator.clipboard.writeText(text);
             notifySuccess("copied successfully")
           }
@@ -89,18 +89,18 @@ const Dashboard = () => {
 
 
       {/*-----------------Cards Row------------------*/}
-      <Row style={{marginTop: '30px'}} gutter={16}>
-        <Col md={6}>
+      <Row style={{marginTop: '30px'}} gutter={[16, 16]}>
+        <Col xs={24} sm={12} md={12} lg={6} xl={6}>
           <RmCard title='Clicks' count={count} icon={<i className="fa fa-paper-plane"></i>}></RmCard>
         </Col>
-        <Col md={6}>
+        <Col xs={24} sm={12} md={12} lg={6} xl={6}>
           <RmCard title='Sign up' count={signup} icon={<i className="fa fa-user-plus"></i>}></RmCard>
         </Col>
-        <Col md={6}>
+        <Col xs={24} sm={12} md={12} lg={6} xl={6}>
           <RmCard title='This Month Earnings' sign={<i className="fa fa-dollar-sign"></i>} count={earning}
                   icon={<i className="fa fa-dollar-sign"></i>}></RmCard>
         </Col>
-        <Col md={6}>
+        <Col xs={24} sm={12} md={12} lg={6} xl={6}>
           <RmCard title='Balance' sign={<i className="fa fa-dollar-sign"></i>} count={user.balance}
                   icon={<i className="fa fa-dollar-sign"></i>}></RmCard>
         </Col>
@@ -116,8 +116,8 @@ const Dashboard = () => {
         <Row style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
           <Col><a href>Clicks & Signup</a></Col>
           <Col> <Form.Select onChange={(e) => setRange(e.target.value)} aria-label="Default select example">
-            {/*<option></option>*/}
             <option value="last_month">Last 30 Days</option>
+            {/*<option value="last_week">Last Week</option>*/}
             <option value="last_6_month">Last 6 Months</option>
             <option value="last_year">Last Year</option>
           </Form.Select></Col>
