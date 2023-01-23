@@ -63,7 +63,8 @@ function App() {
         <Route path="/" element={<ProtectRoute> <Dashboard/></ProtectRoute>} exact/>
         <Route path="/earnings" element={<ProtectRoute> <Earnings/></ProtectRoute>} exact/>
         <Route path="/payment" element={<ProtectRoute> <Payment/></ProtectRoute>} exact/>
-        <Route path="/profile" element={<ProtectRoute> <Profile/></ProtectRoute>} exact/>
+        {/*<Route path="/profile" element={<ProtectRoute> <Profile/></ProtectRoute>} exact/>*/}
+        <Route path="/profile" element={<Profile/>} exact/>
         <Route path="/signup" element={<Signup/>} exact/>
         <Route path="/signin" element={<Signin/>} exact/>
         <Route path="/reset-password" element={<PasswordReset/>} exact/>

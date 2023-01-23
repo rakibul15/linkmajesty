@@ -26,3 +26,33 @@ h4 {
     font-size: 17px;
     margin-bottom: 10px;
 }
+
+/*.input-file {*/
+/*    display: none;*/
+/*}*/
+
+/*.input-file:before {*/
+/*    display: block;*/
+/*}*/
+.upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.label_img {
+    background-color: #1890ff;
+    padding: 4px 21px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 10px;
+    color: #ffffff;
+}

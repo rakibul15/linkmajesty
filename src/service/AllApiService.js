@@ -5,8 +5,12 @@ class AllApiService {
     return axiosInstance.get(`/get-payment-list?page=${currentPage}`,);
   }
 
-  paymentRequest(data) {
-    return axiosInstance.post('/payment-request', data);
+  userImage(data) {
+    return axiosInstance.post('/update-user-image', data);
+  }
+
+  userInfoUpdate(data) {
+    return axiosInstance.post('/update-user-info', data);
   }
 
 

@@ -1,17 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import CommonLayout from "../layout/CommonLayout";
-import {Col, Form, Input, message, Row, Space, Upload} from "antd";
+import {Col, Form, Input, Row, Space} from "antd";
 import RMForm from "../common/RMForm";
 import RMButton from "../common/button/RMButton";
 import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import ChangePassword from "./ChangePassword";
-import {LoadingOutlined, PlusOutlined} from '@ant-design/icons';
 import PaypalEmail from "./PaypalEmail";
+import {notifyError, notifySuccess} from "../common/notifications";
+import AllApiService from "../../service/AllApiService";
+
 
 const Profile = () => {
   const [form] = Form.useForm();
   const {id} = useParams();
+  const [loading, setLoading] = useState(false);
+  const [imageUrl, setImageUrl] = useState();
   const layout = {
     labelCol: {
       span: 24,
@@ -30,49 +34,48 @@ const Profile = () => {
       ...user
     })
   }, []);
+
+
+  const updateImage = async (values) => {
+    try {
+      const {data} = await AllApiService.userImage(values);
+      if (data.status === false) {
+        notifyError(data.message)
+        return
+      }
+      setImageUrl(data.image)
+      notifySuccess(data.messages)
+    } catch (error) {
+      notifyError("Something Went Wrong!")
+    }
+  };
+
+
+  const updateUserInfo = async (values) => {
+    try {
+      const {data} = await AllApiService.userInfoUpdate(values);
+      if (data.status === false) {
+        notifyError(data.message)
+        return
+      }
+      setImageUrl(data.image)
+      notifySuccess(data.messages)
+    } catch (error) {
+      notifyError("Something Went Wrong!")
+    }
+  };
+
   const onFinish = (values) => {
     console.log({values})
+    updateUserInfo()
   }
 
-  const beforeUpload = (file) => {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-    if (!isJpgOrPng) {
-      message.error('You can only upload JPG/PNG file!');
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-      message.error('Image must smaller than 2MB!');
-    }
-    return isJpgOrPng && isLt2M;
-  };
 
-  const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState();
-  const handleChange = (info) => {
-    console.log({info})
-    if (info.file.status === 'uploading') {
-      setLoading(true);
-      console.log("Uploading")
-      return;
-    }
-    if (info.file.status === 'done') {
-      // Get this url from response in real world.
-      console.log('Done')
-    }
-  };
-
-  const uploadButton = (
-    <div>
-      {loading ? <LoadingOutlined/> : <PlusOutlined/>}
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
+  const logoFileUpload = (file) => {
+    const formData = new FormData();
+    formData.append('user_image', file);
+    updateImage(formData)
+  }
 
 
   return (
@@ -94,34 +97,30 @@ const Profile = () => {
 
             {/*--------Profile Image and Name----------*/}
             <Space style={{display: "flex", alignItems: 'flex-end'}}>
-              <Upload
-                name="user_image"
-                listType="picture-card"
-                className="avatar-uploader"
-                showUploadList={false}
-                action='{http://34.27.11.233/v1/affiliate/update-user-image'
-                beforeUpload={beforeUpload}
-                onChange={handleChange}
-              >
-                {imageUrl ? (
-                  <img
-                    src={imageUrl}
-                    alt="avatar"
-                    style={{
-                      width: '100%',
-                    }}
-                  />
-                ) : (
-                  uploadButton
-                )}
-              </Upload>
-
+              <img style={{height: '130px', width: '130px', objectFit: 'fill'}} src={imageUrl}
+                   alt=""/>
 
               <div>
                 <p style={{marginBottom: '0px'}}>{user.name}</p>
-                <small>frghftg</small>
               </div>
             </Space>
+            <div className="upload-btn-wrapper">
+
+              <input className='input-file' type={"file"}
+                     accept=".jpg, .jpeg, .png, .pdf"
+                     onChange={(e) => {
+                       logoFileUpload(
+                         e.target.files[0]
+                       )
+                     }}
+                     height={"fit-content"} type="file"/>
+              <label className='label_img' htmlFor="upload file">
+                {/*<img style={{width: '40px', height: '40px', objectFit: 'cover'}} src={icon} alt=""/>*/}
+                Upload Image
+              </label>
+
+            </div>
+
             {/* -----------Basic Details---------*/}
             <h4 style={{marginTop: '30px'}}>Basic Details</h4>
             <RMForm form={form}
